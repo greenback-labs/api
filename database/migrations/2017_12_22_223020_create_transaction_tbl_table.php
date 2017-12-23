@@ -18,6 +18,7 @@ class CreateTransactionTblTable extends Migration
             $table->integer('account_id')->unsigned();
             $table->integer('category_id')->unsigned();
             $table->integer('person_id')->unsigned()->nullable();
+            $table->integer('transfer_code')->unsigned()->nullable();
             $table->string('type');
             $table->decimal('value');
             $table->string('title');

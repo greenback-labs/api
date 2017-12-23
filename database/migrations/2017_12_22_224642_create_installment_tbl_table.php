@@ -17,7 +17,7 @@ class CreateInstallmentTblTable extends Migration
             $table->increments('id');
             $table->integer('transaction_id')->unsigned();
             $table->decimal('value');
-            $table->timestamp('expiration_date');
+            $table->timestamp('deadline_date');
             $table->timestamp('effective_date');
             $table->string('status');
             $table->timestamps();

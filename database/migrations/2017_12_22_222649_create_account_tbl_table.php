@@ -15,7 +15,7 @@ class CreateAccountTblTable extends Migration
     {
         Schema::create('account_tbl', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('account_id')->unsigned();
+            $table->integer('account_id')->unsigned()->nullable();
             $table->string('title');
             $table->string('description')->nullable();
             $table->timestamps();
