@@ -16,7 +16,7 @@ class CreatePersonTblTable extends Migration
         Schema::create('person_tbl', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('person_id')->unsigned();
-            $table->string('title');
+            $table->string('name');
             $table->string('description')->nullable();
             $table->timestamps();
         });
