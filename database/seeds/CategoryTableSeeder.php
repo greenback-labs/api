@@ -12,12 +12,25 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        $recordsCategory = factory(Category::class, rand(6, 20))->create();
-        
-        foreach($recordsCategory as $recordCategory) {
-            if(rand(1, 2) % 2 === 0 && ($id = rand(1, Category::count())) !== $recordCategory->id) {
+        factory(Category::class, rand(10, 50))->create()->each(function($recordCategory) {
+            if(rand(1, 2) % 2 === 0 && ($id = $this->randomCategoryId([$recordCategory->id]))) {
                 $recordCategory->category_id = $id;
+                $recordCategory->save();
             }
-        }
+        });
+    }
+
+    /**
+     * Get an random category.
+     *
+     * @return int
+     */
+    private function randomCategoryId(Array $except = [])
+    {
+        do {
+            $id = rand(Category::min('id') ?: 0, Category::count())
+        } while(in_array($id, $except));
+        
+        return Category::find($id) ?: null;
     }
 }
