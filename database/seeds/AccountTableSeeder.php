@@ -28,7 +28,7 @@ class AccountTableSeeder extends Seeder
     private function randomAccountId(Array $except = [])
     {
         do {
-            $id = rand(Account::min('id') ?: 0, Account::count())
+            $id = rand(Account::min('id') ?: 0, Account::count());
         } while(in_array($id, $except));
         
         return Account::find($id) ?: null;

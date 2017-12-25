@@ -78,7 +78,7 @@ class TransactionTableSeeder extends Seeder
     private function randomAccountId(Array $except = [])
     {
         do {
-            $id = rand(Account::min('id') ?: 0, Account::count())
+            $id = rand(Account::min('id') ?: 0, Account::count());
         } while(in_array($id, $except));
         
         return Account::find($id) ?: null;
@@ -92,7 +92,7 @@ class TransactionTableSeeder extends Seeder
     private function randomCategoryId(Array $except = [])
     {
         do {
-            $id = rand(Category::min('id') ?: 0, Category::count())
+            $id = rand(Category::min('id') ?: 0, Category::count());
         } while(in_array($id, $except));
         
         return Category::find($id) ?: null;
@@ -106,7 +106,7 @@ class TransactionTableSeeder extends Seeder
     private function randomPersonId(Array $except = [])
     {
         do {
-            $id = rand(Person::min('id') ?: 0, Person::count())
+            $id = rand(Person::min('id') ?: 0, Person::count());
         } while(in_array($id, $except));
         
         return Person::find($id) ?: null;

@@ -28,7 +28,7 @@ class PersonTableSeeder extends Seeder
     private function randomPersonId(Array $except = [])
     {
         do {
-            $id = rand(Person::min('id') ?: 0, Person::count())
+            $id = rand(Person::min('id') ?: 0, Person::count());
         } while(in_array($id, $except));
         
         return Person::find($id) ?: null;

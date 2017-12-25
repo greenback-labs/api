@@ -28,7 +28,7 @@ class CategoryTableSeeder extends Seeder
     private function randomCategoryId(Array $except = [])
     {
         do {
-            $id = rand(Category::min('id') ?: 0, Category::count())
+            $id = rand(Category::min('id') ?: 0, Category::count());
         } while(in_array($id, $except));
         
         return Category::find($id) ?: null;
