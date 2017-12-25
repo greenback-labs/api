@@ -81,7 +81,7 @@ class TransactionTableSeeder extends Seeder
             $id = rand(Account::min('id') ?: 0, Account::count());
         } while(in_array($id, $except));
         
-        return Account::find($id) ?: null;
+        return $id ?: null;
     }
 
     /**
@@ -95,7 +95,7 @@ class TransactionTableSeeder extends Seeder
             $id = rand(Category::min('id') ?: 0, Category::count());
         } while(in_array($id, $except));
         
-        return Category::find($id) ?: null;
+        return $id ?: null;
     }
 
     /**
@@ -109,7 +109,7 @@ class TransactionTableSeeder extends Seeder
             $id = rand(Person::min('id') ?: 0, Person::count());
         } while(in_array($id, $except));
         
-        return Person::find($id) ?: null;
+        return $id ?: null;
     }
 
     /**

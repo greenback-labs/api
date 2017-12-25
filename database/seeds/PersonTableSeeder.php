@@ -31,6 +31,6 @@ class PersonTableSeeder extends Seeder
             $id = rand(Person::min('id') ?: 0, Person::count());
         } while(in_array($id, $except));
         
-        return Person::find($id) ?: null;
+        return $id ?: null;
     }
 }

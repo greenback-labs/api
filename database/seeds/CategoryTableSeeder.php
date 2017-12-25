@@ -31,6 +31,6 @@ class CategoryTableSeeder extends Seeder
             $id = rand(Category::min('id') ?: 0, Category::count());
         } while(in_array($id, $except));
         
-        return Category::find($id) ?: null;
+        return $id ?: null;
     }
 }
