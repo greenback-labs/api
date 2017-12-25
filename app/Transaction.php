@@ -73,7 +73,6 @@ class Transaction extends Model
      * Get the installment records for the transaction record.
      */
     public function recordsInstallment()
-    public function installmentRecords()
     {
         return $this->hasMany(Installment::class, 'transaction_id');
     }
