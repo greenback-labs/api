@@ -24,7 +24,12 @@ class CreateTransactionTblTable extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->timestamp('date')->useCurrent();
-            $table->timestamps()->nullable(false)->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
+
+            $table->foreign('account_id')->references('id')->on('account_tbl');
+            $table->foreign('category_id')->references('id')->on('category_tbl');
+            $table->foreign('person_id')->references('id')->on('person_tbl');
         });
     }
 

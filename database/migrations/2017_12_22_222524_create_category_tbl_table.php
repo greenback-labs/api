@@ -18,7 +18,10 @@ class CreateCategoryTblTable extends Migration
             $table->integer('category_id')->unsigned()->nullable();
             $table->string('title');
             $table->string('description')->nullable();
-            $table->timestamps()->nullable(false)->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
+
+            $table->foreign('category_id')->references('id')->on('category_tbl');
         });
     }
 

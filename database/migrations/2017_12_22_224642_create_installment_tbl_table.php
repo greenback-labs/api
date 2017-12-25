@@ -20,7 +20,10 @@ class CreateInstallmentTblTable extends Migration
             $table->timestamp('deadline_date')->useCurrent();
             $table->timestamp('effective_date')->useCurrent();
             $table->string('status');
-            $table->timestamps()->nullable(false)->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
+
+            $table->foreign('transaction_id')->references('id')->on('transaction_tbl');
         });
     }
 

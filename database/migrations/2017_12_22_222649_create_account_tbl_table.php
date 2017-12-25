@@ -18,7 +18,10 @@ class CreateAccountTblTable extends Migration
             $table->integer('account_id')->unsigned()->nullable();
             $table->string('title');
             $table->string('description')->nullable();
-            $table->timestamps()->nullable(false)->useCurrent();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
+
+            $table->foreign('account_id')->references('id')->on('account_tbl');
         });
     }
 
