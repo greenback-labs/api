@@ -44,7 +44,7 @@ class TransactionTableSeeder extends Seeder
                         'currentMonth' => $i,
                         'currentYear' => $currentYear
                     ]);
-                })));
+                }));
 
                 factory(Transaction::class, ($transferQuantity / 2))->create([
                     'type' => 'out'
@@ -64,7 +64,7 @@ class TransactionTableSeeder extends Seeder
 
                     $recordsTransaction->union(collect($recordTransaction, $recordTransactionReplicated));
 
-                })));
+                });
             }
             $currentYear += 1;
         }
