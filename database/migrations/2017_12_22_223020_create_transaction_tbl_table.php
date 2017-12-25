@@ -19,7 +19,7 @@ class CreateTransactionTblTable extends Migration
             $table->integer('category_id')->unsigned();
             $table->integer('person_id')->unsigned()->nullable();
             $table->integer('transfer_code')->unsigned()->nullable();
-            $table->string('type');
+            $table->string('type', 10);
             $table->decimal('value', 12, 2);
             $table->string('title', 250);
             $table->string('description', 1000)->nullable();
