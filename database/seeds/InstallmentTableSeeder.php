@@ -29,7 +29,7 @@ class InstallmentTableSeeder extends Seeder
                     $recordInstallment->transaction_id = $recordTransaction->id;
                     $recordInstallment->deadline_date = $currentDate;
                     $recordInstallment->effective_date = $currentDate;
-                    $recordInstallment->value = $currentInstallment === $installmentQuantity ? $lastInstallmentValue : $installmentValue;
+                    $recordInstallment->value = round($currentInstallment === $installmentQuantity ? $lastInstallmentValue : $installmentValue, 2);
 
                     $currentDate = strtotime('+1 ' . $period, $currentDate);
                     $currentInstallment += 1;
