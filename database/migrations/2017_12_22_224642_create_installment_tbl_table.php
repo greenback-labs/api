@@ -17,10 +17,10 @@ class CreateInstallmentTblTable extends Migration
             $table->increments('id');
             $table->integer('transaction_id')->unsigned();
             $table->decimal('value');
-            $table->timestamp('deadline_date');
-            $table->timestamp('effective_date');
+            $table->timestamp('deadline_date')->useCurrent();
+            $table->timestamp('effective_date')->useCurrent();
             $table->string('status');
-            $table->timestamps();
+            $table->timestamps()->nullable(false)->useCurrent();
         });
     }
 

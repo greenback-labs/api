@@ -23,8 +23,8 @@ class CreateTransactionTblTable extends Migration
             $table->decimal('value');
             $table->string('title');
             $table->string('description')->nullable();
-            $table->timestamp('date');
-            $table->timestamps();
+            $table->timestamp('date')->useCurrent();
+            $table->timestamps()->nullable(false)->useCurrent();
         });
     }
 

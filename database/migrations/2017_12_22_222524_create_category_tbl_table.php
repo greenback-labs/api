@@ -18,7 +18,7 @@ class CreateCategoryTblTable extends Migration
             $table->integer('category_id')->unsigned()->nullable();
             $table->string('title');
             $table->string('description')->nullable();
-            $table->timestamps();
+            $table->timestamps()->nullable(false)->useCurrent();
         });
     }
 

@@ -18,7 +18,7 @@ class CreatePersonTblTable extends Migration
             $table->integer('person_id')->unsigned()->nullable();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->timestamps();
+            $table->timestamps()->nullable(false)->useCurrent();
         });
     }
 
