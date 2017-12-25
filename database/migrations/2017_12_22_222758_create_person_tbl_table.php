@@ -16,8 +16,8 @@ class CreatePersonTblTable extends Migration
         Schema::create('person_tbl', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('person_id')->unsigned()->nullable();
-            $table->string('name');
-            $table->string('description')->nullable();
+            $table->string('name', 100)->unique();
+            $table->string('description', 500)->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 

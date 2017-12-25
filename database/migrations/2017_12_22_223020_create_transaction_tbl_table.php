@@ -20,9 +20,9 @@ class CreateTransactionTblTable extends Migration
             $table->integer('person_id')->unsigned()->nullable();
             $table->integer('transfer_code')->unsigned()->nullable();
             $table->string('type');
-            $table->decimal('value');
-            $table->string('title');
-            $table->string('description')->nullable();
+            $table->decimal('value', 12, 2);
+            $table->string('title', 250);
+            $table->string('description', 1000)->nullable();
             $table->timestamp('date')->useCurrent();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

@@ -16,8 +16,8 @@ class CreateCategoryTblTable extends Migration
         Schema::create('category_tbl', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('category_id')->unsigned()->nullable();
-            $table->string('title');
-            $table->string('description')->nullable();
+            $table->string('title', 50)->unique();
+            $table->string('description', 500)->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 

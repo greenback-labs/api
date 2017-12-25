@@ -16,10 +16,10 @@ class CreateInstallmentTblTable extends Migration
         Schema::create('installment_tbl', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('transaction_id')->unsigned();
-            $table->decimal('value');
+            $table->decimal('value', 12, 2);
             $table->timestamp('deadline_date')->useCurrent();
             $table->timestamp('effective_date')->useCurrent();
-            $table->string('status');
+            $table->string('status', 20);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
 
