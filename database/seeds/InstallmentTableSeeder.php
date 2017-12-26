@@ -25,15 +25,19 @@ class InstallmentTableSeeder extends Seeder
                 $lastInstallmentValue = $installmentValue + ($recordTransaction->value - ($installmentValue * $installmentQuantity));
                 $currentInstallment = 1;
 
-                factory(Installment::class, $installmentQuantity)->create()->each(function($recordInstallment) {
+                $recordsInstallment = factory(Installment::class, $installmentQuantity)->make();
+
+                foreach($recordsInstallment as $recordInstallment) {
                     $recordInstallment->transaction_id = $recordTransaction->id;
-                    $recordInstallment->deadline_date = $currentDate;
-                    $recordInstallment->effective_date = $currentDate;
+                    $recordInstallment->deadline_date = date('Y-m-d G:i:s', $currentDate);
+                    $recordInstallment->effective_date = date('Y-m-d G:i:s', $currentDate);
                     $recordInstallment->value = round($currentInstallment === $installmentQuantity ? $lastInstallmentValue : $installmentValue, 2);
+                    
+                    $recordInstallment->save();
 
                     $currentDate = strtotime('+1 ' . $period, $currentDate);
                     $currentInstallment += 1;
-                });
+                }
             }
         }
     }

@@ -13,7 +13,7 @@ class PersonTableSeeder extends Seeder
     public function run()
     {
         factory(Person::class, rand(20, 80))->create()->each(function($recordPerson) {
-            if(rand(1, 2) % 2 === 0 && ($id = $this->randomPersonId([$recordPerson->id]))) {
+            if(rand(1, 2) % 2 === 0 && ($id = PersonTableSeeder::randomPersonId([$recordPerson->id]))) {
                 $recordPerson->person_id = $id;
                 $recordPerson->save();
             }
@@ -25,7 +25,7 @@ class PersonTableSeeder extends Seeder
      *
      * @return int
      */
-    private function randomPersonId(Array $except = [])
+    public static function randomPersonId(Array $except = [])
     {
         do {
             $id = rand(Person::min('id') ?: 0, Person::count());

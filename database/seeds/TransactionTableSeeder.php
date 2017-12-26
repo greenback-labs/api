@@ -29,7 +29,6 @@ class TransactionTableSeeder extends Seeder
         $minPercentageTransferPerMonth = 0;
         $maxPercentageTransferPerMonth = 20;
 
-        $recordsTransaction = collect();
         $currentYear = $initialYear;
 
         while($currentYear <= $finalYear) {
@@ -39,19 +38,25 @@ class TransactionTableSeeder extends Seeder
                 $transferQuantity = $transferPercentage % 2 === 0 ? $transferPercentage : $transferPercentage - 1;
                 $transactionQuantity -= $transferQuantity;
 
-                $recordsTransaction->union(factory(Transaction::class, $transactionQuantity)->create()->each(function($recordTransaction) {
-                    $recordTransaction = changeTransaction($recordTransaction, [
+                $recordsTransaction = factory(Transaction::class, $transactionQuantity)->make();
+
+                foreach($recordsTransaction as $recordTransaction) {
+                    $recordTransaction = $this->changeTransaction($recordTransaction, [
                         'currentMonth' => $i,
                         'currentYear' => $currentYear
                     ]);
-                }));
 
-                factory(Transaction::class, ($transferQuantity / 2))->create([
+                    $recordTransaction->save();
+                }
+
+                $recordsTransaction = factory(Transaction::class, ($transferQuantity / 2))->make([
                     'type' => 'out'
-                ])->each(function($recordTransaction) {
+                ]);
+
+                foreach($recordsTransaction as $recordTransaction) {
                     $recordTransaction->transfer_code = (Transaction::max('transfer_code') ?: 0) + 1;
 
-                    $recordTransaction = changeTransaction($recordTransaction, [
+                    $recordTransaction = $this->changeTransaction($recordTransaction, [
                         'currentMonth' => $i,
                         'currentYear' => $currentYear
                     ]);
@@ -60,56 +65,12 @@ class TransactionTableSeeder extends Seeder
 
                     $recordTransactionReplicated = $recordTransaction->replicate();
                     $recordTransactionReplicated->type = 'in';
+
                     $recordTransactionReplicated->save();
-
-                    $recordsTransaction->union(collect($recordTransaction, $recordTransactionReplicated));
-
-                });
+                }
             }
             $currentYear += 1;
         }
-    }
-
-    /**
-     * Get an random account.
-     *
-     * @return int
-     */
-    private function randomAccountId(Array $except = [])
-    {
-        do {
-            $id = rand(Account::min('id') ?: 0, Account::count());
-        } while(in_array($id, $except));
-        
-        return $id ?: null;
-    }
-
-    /**
-     * Get an random category.
-     *
-     * @return int
-     */
-    private function randomCategoryId(Array $except = [])
-    {
-        do {
-            $id = rand(Category::min('id') ?: 0, Category::count());
-        } while(in_array($id, $except));
-        
-        return $id ?: null;
-    }
-
-    /**
-     * Get an random person.
-     *
-     * @return int
-     */
-    private function randomPersonId(Array $except = [])
-    {
-        do {
-            $id = rand(Person::min('id') ?: 0, Person::count());
-        } while(in_array($id, $except));
-        
-        return $id ?: null;
     }
 
     /**
@@ -132,10 +93,10 @@ class TransactionTableSeeder extends Seeder
      */
     public function changeTransaction(Transaction $recordTransaction, Array $date)
     {
-        $recordTransaction->date = $this->randomDate($date['currentMonth'], $date['currentYear']);
-        $recordTransaction->account_id = $this->randomAccountId();
-        $recordTransaction->category_id = $this->randomCategoryId();
-        $recordTransaction->person_id = !$recordTransaction->transfer_code && rand(1, 2) % 2 === 0 ? $this->randomPersonId() : null;
+        $recordTransaction->date = date('Y-m-d G:i:s', $this->randomDate($date['currentMonth'], $date['currentYear']));
+        $recordTransaction->account_id = AccountTableSeeder::randomAccountId();
+        $recordTransaction->category_id = CategoryTableSeeder::randomCategoryId();
+        $recordTransaction->person_id = !$recordTransaction->transfer_code && rand(1, 2) % 2 === 0 ? PersonTableSeeder::randomPersonId() : null;
 
         return $recordTransaction;
     }
