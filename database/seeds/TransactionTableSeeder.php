@@ -34,7 +34,7 @@ class TransactionTableSeeder extends Seeder
         while($currentYear <= $finalYear) {
             for($i = 1; $i <= 12; $i++) {
                 $transactionQuantity = rand($minPerMonth, $maxPerMonth);
-                $transferPercentage = round($transactionQuantity * rand($minPercentageTransferPerMonth, $maxPercentageTransferPerMonth));
+                $transferPercentage = round($transactionQuantity * (rand($minPercentageTransferPerMonth, $maxPercentageTransferPerMonth) / 100));
                 $transferQuantity = $transferPercentage % 2 === 0 ? $transferPercentage : $transferPercentage - 1;
                 $transactionQuantity -= $transferQuantity;
 
@@ -93,7 +93,7 @@ class TransactionTableSeeder extends Seeder
      */
     public function changeTransaction(Transaction $recordTransaction, Array $date)
     {
-        $recordTransaction->date = date('Y-m-d G:i:s', $this->randomDate($date['currentMonth'], $date['currentYear']));
+        $recordTransaction->date = date('Y-m-d H:i:s', $this->randomDate($date['currentMonth'], $date['currentYear']));
         $recordTransaction->account_id = AccountTableSeeder::randomAccountId();
         $recordTransaction->category_id = CategoryTableSeeder::randomCategoryId();
         $recordTransaction->person_id = !$recordTransaction->transfer_code && rand(1, 2) % 2 === 0 ? PersonTableSeeder::randomPersonId() : null;

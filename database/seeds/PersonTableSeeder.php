@@ -12,7 +12,10 @@ class PersonTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Person::class, rand(20, 80))->create()->each(function($recordPerson) {
+        $minRecords = 20;
+        $maxRecords = 80;
+
+        factory(Person::class, rand($minRecords, $maxRecords))->create()->each(function($recordPerson) {
             if(rand(1, 2) % 2 === 0 && ($id = PersonTableSeeder::randomPersonId([$recordPerson->id]))) {
                 $recordPerson->person_id = $id;
                 $recordPerson->save();

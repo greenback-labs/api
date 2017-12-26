@@ -12,7 +12,10 @@ class AccountTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Account::class, rand(6, 20))->create()->each(function($recordAccount) {
+        $minRecords = 6;
+        $maxRecords = 20;
+
+        factory(Account::class, rand($minRecords, $maxRecords))->create()->each(function($recordAccount) {
             if(rand(1, 2) % 2 === 0 && ($id = AccountTableSeeder::randomAccountId([$recordAccount->id]))) {
                 $recordAccount->account_id = $id;
                 $recordAccount->save();
