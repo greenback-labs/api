@@ -41,22 +41,28 @@ class PersonTableSeeder extends Seeder
         return $id ?: null;
     }
 
-
     /**
-     * Get an array containing the person id of recursive records.
+     * Get an array containing the person id of recursive records (parent and child merged).
      *
      * @param  \App\Person  $recordPerson
      * @return array
      */
     public static function getRecursiveRecordsId(Person $recordPerson)
     {
-        $recursiveRecordsId = [];
+        $parentRecordsId = [];
         $currentPerson = $recordPerson;
         
-        while($currentPerson = $currentPerson->recordPerson) {
-            array_push($recursiveRecordsId, $currentPerson->id);
+        while($currentPerson = $currentPerson->recordPersonParent) {
+            array_push($parentRecordsId, $currentPerson->id);
         }
 
-        return $recursiveRecordsId;
+        $childRecordsId = [];
+        $currentPerson = $recordPerson;
+
+        while($currentPerson = $currentPerson->recordPersonChild) {
+            array_push($childRecordsId, $currentPerson->id);
+        }
+
+        return array_merge($parentRecordsId, $childRecordsId);
     }
 }

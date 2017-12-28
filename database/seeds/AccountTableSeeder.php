@@ -41,22 +41,28 @@ class AccountTableSeeder extends Seeder
         return $id ?: null;
     }
 
-
     /**
-     * Get an array containing the account id of recursive records.
+     * Get an array containing the account id of recursive records (parent and child merged).
      *
      * @param  \App\Account  $recordAccount
      * @return array
      */
     public static function getRecursiveRecordsId(Account $recordAccount)
     {
-        $recursiveRecordsId = [];
+        $parentRecordsId = [];
         $currentAccount = $recordAccount;
         
-        while($currentAccount = $currentAccount->recordAccount) {
-            array_push($recursiveRecordsId, $currentAccount->id);
+        while($currentAccount = $currentAccount->recordAccountParent) {
+            array_push($parentRecordsId, $currentAccount->id);
         }
 
-        return $recursiveRecordsId;
+        $childRecordsId = [];
+        $currentAccount = $recordAccount;
+
+        while($currentAccount = $currentAccount->recordAccountChild) {
+            array_push($childRecordsId, $currentAccount->id);
+        }
+
+        return array_merge($parentRecordsId, $childRecordsId);
     }
 }

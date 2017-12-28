@@ -41,22 +41,28 @@ class CategoryTableSeeder extends Seeder
         return $id ?: null;
     }
 
-
     /**
-     * Get an array containing the category id of recursive records.
+     * Get an array containing the category id of recursive records (parent and child merged).
      *
      * @param  \App\Category  $recordCategory
      * @return array
      */
     public static function getRecursiveRecordsId(Category $recordCategory)
     {
-        $recursiveRecordsId = [];
+        $parentRecordsId = [];
         $currentCategory = $recordCategory;
         
-        while($currentCategory = $currentCategory->recordCategory) {
-            array_push($recursiveRecordsId, $currentCategory->id);
+        while($currentCategory = $currentCategory->recordCategoryParent) {
+            array_push($parentRecordsId, $currentCategory->id);
         }
 
-        return $recursiveRecordsId;
+        $childRecordsId = [];
+        $currentCategory = $recordCategory;
+
+        while($currentCategory = $currentCategory->recordCategoryChild) {
+            array_push($childRecordsId, $currentCategory->id);
+        }
+
+        return array_merge($parentRecordsId, $childRecordsId);
     }
 }
