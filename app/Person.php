@@ -41,9 +41,17 @@ class Person extends Model
     /**
      * Get the person record that owns the person record.
      */
-    public function recordPerson()
+    public function recordPersonParent()
     {
         return $this->belongsTo(Person::class, 'person_id');
+    }
+
+    /**
+     * Get the person record associated with the person.
+     */
+    public function recordPersonChild()
+    {
+        return $this->hasOne(Person::class, 'person_id');
     }
 
     /**
