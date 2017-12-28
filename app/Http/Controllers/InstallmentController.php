@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Installment;
+use App\Resources\InstallmentCollection;
 
 class InstallmentController extends Controller
 {
@@ -13,7 +15,7 @@ class InstallmentController extends Controller
      */
     public function index()
     {
-        //
+        return new InstallmentCollection(Installment::all());
     }
 
     /**

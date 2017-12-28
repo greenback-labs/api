@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Account;
+use App\Resources\AccountCollection;
 
 class AccountController extends Controller
 {
@@ -13,7 +15,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        //
+        return new AccountCollection(Account::all());
     }
 
     /**

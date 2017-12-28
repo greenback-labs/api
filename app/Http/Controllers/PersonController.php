@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Person;
+use App\Resources\PersonCollection;
 
 class PersonController extends Controller
 {
@@ -13,7 +15,7 @@ class PersonController extends Controller
      */
     public function index()
     {
-        //
+        return new PersonCollection(Person::all());
     }
 
     /**
