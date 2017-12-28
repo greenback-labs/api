@@ -14,6 +14,13 @@ class InstallmentResource extends Resource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'value' => $this->value,
+            'deadlineDate' => $this->deadlineDate,
+            'effectiveDate' => $this->effectiveDate,
+            'status' => $this->status,
+            'recordTransaction' => $this->recordTransaction
+        ];
     }
 }

@@ -14,6 +14,17 @@ class TransactionResource extends Resource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'transferCode' => $this->transfer_code,
+            'type' => $this->type,
+            'value' => $this->value,
+            'title' => $this->title,
+            'description' => $this->description,
+            'date' => $this->date,
+            'recordAccount' => $this->recordAccount,
+            'recordCategory' => $this->recordCategory,
+            'recordPerson' => $this->recordPerson
+        ];
     }
 }

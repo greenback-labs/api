@@ -14,6 +14,11 @@ class CategoryResource extends Resource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'recordCategory' => $this->recordCategory
+        ];
     }
 }
