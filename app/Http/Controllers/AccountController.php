@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Account;
-use App\Resources\AccountCollection;
+use App\Http\Resources\AccountCollection;
 
 class AccountController extends Controller
 {

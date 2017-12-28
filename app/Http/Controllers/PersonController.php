@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Person;
-use App\Resources\PersonCollection;
+use App\Http\Resources\PersonCollection;
 
 class PersonController extends Controller
 {

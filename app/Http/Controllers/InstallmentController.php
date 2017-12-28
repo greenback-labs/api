@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Installment;
-use App\Resources\InstallmentCollection;
+use App\Http\Resources\InstallmentCollection;
 
 class InstallmentController extends Controller
 {
