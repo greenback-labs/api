@@ -16,7 +16,10 @@ class CategoryTableSeeder extends Seeder
         $maxRecords = 50;
 
         factory(Category::class, rand($minRecords, $maxRecords))->create()->each(function($recordCategory) {
-            if(rand(1, 2) % 2 === 0 && ($id = CategoryTableSeeder::randomCategoryId([$recordCategory->id]))) {
+            $except = CategoryTableSeeder::getRecursiveRecordsId($recordCategory);
+            array_push($except, $recordCategory->id);
+            
+            if(rand(1, 2) % 2 === 0 && ($id = CategoryTableSeeder::randomCategoryId($except))) {
                 $recordCategory->category_id = $id;
                 $recordCategory->save();
             }
@@ -24,16 +27,36 @@ class CategoryTableSeeder extends Seeder
     }
 
     /**
-     * Get an random category.
+     * Get an random category id.
      *
+     * @param  array  $except
      * @return int
      */
-    public static function randomCategoryId(Array $except = [])
+    public static function randomCategoryId(array $except = [])
     {
         do {
             $id = rand(Category::min('id') ?: 0, Category::count());
         } while(in_array($id, $except));
         
         return $id ?: null;
+    }
+
+
+    /**
+     * Get an array containing the category id of recursive records.
+     *
+     * @param  \App\Category  $recordCategory
+     * @return array
+     */
+    public static function getRecursiveRecordsId(Category $recordCategory)
+    {
+        $recursiveRecordsId = [];
+        $currentCategory = $recordCategory;
+        
+        while($currentCategory = $currentCategory->recordCategory) {
+            array_push($recursiveRecordsId, $currentCategory->id);
+        }
+
+        return $recursiveRecordsId;
     }
 }
