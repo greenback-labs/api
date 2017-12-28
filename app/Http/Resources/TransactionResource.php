@@ -22,9 +22,9 @@ class TransactionResource extends Resource
             'title' => $this->title,
             'description' => $this->description,
             'date' => $this->date,
-            'recordAccount' => $this->recordAccount,
-            'recordCategory' => $this->recordCategory,
-            'recordPerson' => $this->recordPerson
+            'recordAccount' => new AccountResource($this->recordAccount),
+            'recordCategory' => new CategoryResource($this->recordCategory),
+            'recordPerson' => new PersonResource($this->recordPerson)
         ];
     }
 }

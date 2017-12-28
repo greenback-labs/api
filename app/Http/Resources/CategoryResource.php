@@ -18,7 +18,7 @@ class CategoryResource extends Resource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'recordCategory' => $this->recordCategory
+            'recordCategory' => new CategoryResource($this->recordCategory)
         ];
     }
 }
