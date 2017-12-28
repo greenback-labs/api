@@ -15,7 +15,7 @@ class PersonController extends Controller
      */
     public function index()
     {
-        return new PersonCollection(Person::all());
+        return new PersonCollection(Person::paginate(100));
     }
 
     /**

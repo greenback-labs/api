@@ -15,7 +15,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        return new AccountCollection(Account::all());
+        return new AccountCollection(Account::paginate(100));
     }
 
     /**

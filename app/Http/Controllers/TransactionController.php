@@ -15,7 +15,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        return new TransactionCollection(Transaction::all());
+        return new TransactionCollection(Transaction::paginate(100));
     }
 
     /**
