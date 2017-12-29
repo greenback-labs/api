@@ -20,7 +20,7 @@ class InstallmentResource extends Resource
             'deadlineDate' => $this->deadlineDate,
             'effectiveDate' => $this->effectiveDate,
             'status' => $this->status,
-            'recordTransaction' => new TransactionResource($this->recordTransaction)
+            'recordTransaction' => new TransactionResource($this->whenLoaded('recordTransaction'))
         ];
     }
 }

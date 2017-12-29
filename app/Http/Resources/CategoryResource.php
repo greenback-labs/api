@@ -18,7 +18,7 @@ class CategoryResource extends Resource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'recordCategory' => new CategoryResource($this->recordCategory)
+            'recordCategoryParent' => new CategoryResource($this->whenLoaded('recordCategoryParent'))
         ];
     }
 }

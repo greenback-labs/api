@@ -18,7 +18,7 @@ class AccountResource extends Resource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'recordAccount' => new AccountResource($this->recordAccount)
+            'recordAccountParent' => new AccountResource($this->whenLoaded('recordAccountParent'))
         ];
     }
 }

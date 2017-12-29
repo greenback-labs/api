@@ -18,7 +18,7 @@ class PersonResource extends Resource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'recordPerson' => new PersonResource($this->recordPerson)
+            'recordPersonParent' => new PersonResource($this->whenLoaded('recordPersonParent'))
         ];
     }
 }
