@@ -15,7 +15,7 @@ class InstallmentController extends Controller
      */
     public function index()
     {
-        return new InstallmentCollection(Installment::paginate(100));
+        return new InstallmentCollection(Installment::with('recordTransaction')->paginate(100));
     }
 
     /**

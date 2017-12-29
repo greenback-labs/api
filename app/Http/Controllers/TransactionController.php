@@ -15,7 +15,12 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        return new TransactionCollection(Transaction::paginate(100));
+        return new TransactionCollection(Transaction::with([
+            'recordAccount',
+            'recordCategory',
+            'recordPerson',
+            'recordsInstallment'
+        ])->paginate(100));
     }
 
     /**
