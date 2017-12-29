@@ -17,8 +17,8 @@ class InstallmentResource extends Resource
         return [
             'id' => $this->id,
             'value' => $this->value,
-            'deadlineDate' => $this->deadlineDate,
-            'effectiveDate' => $this->effectiveDate,
+            'deadlineDate' => $this->deadline_date,
+            'effectiveDate' => $this->effective_date,
             'status' => $this->status,
             'recordTransaction' => new TransactionResource($this->whenLoaded('recordTransaction'))
         ];
