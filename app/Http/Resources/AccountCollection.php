@@ -14,8 +14,6 @@ class AccountCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
-            AccountResource::collection($this->collection)
-        ];
+        return AccountResource::collection($this->collection);
     }
 }

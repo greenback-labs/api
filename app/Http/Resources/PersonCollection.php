@@ -14,8 +14,6 @@ class PersonCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
-            PersonResource::collection($this->collection)
-        ];
+        return PersonResource::collection($this->collection);
     }
 }

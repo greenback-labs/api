@@ -14,8 +14,6 @@ class InstallmentCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return [
-            InstallmentResource::collection($this->collection)
-        ];
+        return InstallmentResource::collection($this->collection);
     }
 }
