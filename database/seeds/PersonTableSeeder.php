@@ -16,12 +16,14 @@ class PersonTableSeeder extends Seeder
         $maxRecords = 80;
 
         factory(Person::class, rand($minRecords, $maxRecords))->create()->each(function($recordPerson) {
-            $except = PersonTableSeeder::getRecursiveRecordsId($recordPerson);
-            array_push($except, $recordPerson->id);
-            
-            if(rand(1, 2) % 2 === 0 && ($id = PersonTableSeeder::randomPersonId($except))) {
-                $recordPerson->person_id = $id;
-                $recordPerson->save();
+            if(rand(1, 2) % 2 === 0) {
+                $except = PersonTableSeeder::getChildPersonRecordsId($recordPerson);
+                array_push($except, $recordPerson->id);
+
+                if(($id = PersonTableSeeder::randomPersonId($except))) {
+                    $recordPerson->person_id = $id;
+                    $recordPerson->save();
+                }
             }
         });
     }
@@ -42,27 +44,20 @@ class PersonTableSeeder extends Seeder
     }
 
     /**
-     * Get an array containing the person id of recursive records (parent and child merged).
+     * Get an array containing the person id of recursive child records of the received person record.
      *
      * @param  \App\Person  $recordPerson
      * @return array
      */
-    public static function getRecursiveRecordsId(Person $recordPerson)
+    public static function getChildPersonRecordsId(Person $recordPerson)
     {
-        $parentRecordsId = [];
-        $currentPerson = $recordPerson;
+        $recordsPersonId = [];
         
-        while($currentPerson = $currentPerson->recordPersonParent) {
-            array_push($parentRecordsId, $currentPerson->id);
+        foreach($recordPerson->recordsPerson as $currentRecordPerson) {
+            array_push($recordsPersonId, $currentRecordPerson->id);
+            array_merge($recordsPersonId, PersonTableSeeder::getChildPersonRecordsId($currentRecordPerson);
         }
 
-        $childRecordsId = [];
-        $currentPerson = $recordPerson;
-
-        while($currentPerson = $currentPerson->recordPersonChild) {
-            array_push($childRecordsId, $currentPerson->id);
-        }
-
-        return array_merge($parentRecordsId, $childRecordsId);
+        return $recordsPersonId;
     }
 }

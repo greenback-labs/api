@@ -16,12 +16,14 @@ class CategoryTableSeeder extends Seeder
         $maxRecords = 50;
 
         factory(Category::class, rand($minRecords, $maxRecords))->create()->each(function($recordCategory) {
-            $except = CategoryTableSeeder::getRecursiveRecordsId($recordCategory);
-            array_push($except, $recordCategory->id);
-            
-            if(rand(1, 2) % 2 === 0 && ($id = CategoryTableSeeder::randomCategoryId($except))) {
-                $recordCategory->category_id = $id;
-                $recordCategory->save();
+            if(rand(1, 2) % 2 === 0) {
+                $except = CategoryTableSeeder::getChildCategoryRecordsId($recordCategory);
+                array_push($except, $recordCategory->id);
+
+                if(($id = CategoryTableSeeder::randomCategoryId($except))) {
+                    $recordCategory->category_id = $id;
+                    $recordCategory->save();
+                }
             }
         });
     }
@@ -42,27 +44,20 @@ class CategoryTableSeeder extends Seeder
     }
 
     /**
-     * Get an array containing the category id of recursive records (parent and child merged).
+     * Get an array containing the category id of recursive child records of the received category record.
      *
      * @param  \App\Category  $recordCategory
      * @return array
      */
-    public static function getRecursiveRecordsId(Category $recordCategory)
+    public static function getChildCategoryRecordsId(Category $recordCategory)
     {
-        $parentRecordsId = [];
-        $currentCategory = $recordCategory;
+        $recordsCategoryId = [];
         
-        while($currentCategory = $currentCategory->recordCategoryParent) {
-            array_push($parentRecordsId, $currentCategory->id);
+        foreach($recordCategory->recordsCategory as $currentRecordCategory) {
+            array_push($recordsCategoryId, $currentRecordCategory->id);
+            array_merge($recordsCategoryId, CategoryTableSeeder::getChildCategoryRecordsId($currentRecordCategory);
         }
 
-        $childRecordsId = [];
-        $currentCategory = $recordCategory;
-
-        while($currentCategory = $currentCategory->recordCategoryChild) {
-            array_push($childRecordsId, $currentCategory->id);
-        }
-
-        return array_merge($parentRecordsId, $childRecordsId);
+        return $recordsCategoryId;
     }
 }

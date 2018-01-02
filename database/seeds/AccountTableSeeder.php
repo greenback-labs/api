@@ -16,12 +16,13 @@ class AccountTableSeeder extends Seeder
         $maxRecords = 20;
 
         factory(Account::class, rand($minRecords, $maxRecords))->create()->each(function($recordAccount) {
-            $except = AccountTableSeeder::getRecursiveRecordsId($recordAccount);
-            array_push($except, $recordAccount->id);
-            
-            if(rand(1, 2) % 2 === 0 && ($id = AccountTableSeeder::randomAccountId($except))) {
-                $recordAccount->account_id = $id;
-                $recordAccount->save();
+                $except = AccountTableSeeder::getChildAccountRecordsId($recordAccount);
+                array_push($except, $recordAccount->id);
+
+                if(($id = AccountTableSeeder::randomAccountId($except))) {
+                    $recordAccount->account_id = $id;
+                    $recordAccount->save();
+                }
             }
         });
     }
@@ -42,27 +43,19 @@ class AccountTableSeeder extends Seeder
     }
 
     /**
-     * Get an array containing the account id of recursive records (parent and child merged).
+     * Get an array containing the account id of recursive child records of the received account record.
      *
      * @param  \App\Account  $recordAccount
      * @return array
      */
-    public static function getRecursiveRecordsId(Account $recordAccount)
+    public static function getChildAccountRecordsId(Account $recordAccount)
     {
-        $parentRecordsId = [];
-        $currentAccount = $recordAccount;
+        $recordsAccountId = [];
         
-        while($currentAccount = $currentAccount->recordAccountParent) {
-            array_push($parentRecordsId, $currentAccount->id);
+        foreach($recordAccount->recordsAccount as $currentRecordAccount) {
+            array_merge($recordsAccountId, AccountTableSeeder::getChildAccountRecordsId($currentRecordAccount);
         }
 
-        $childRecordsId = [];
-        $currentAccount = $recordAccount;
-
-        while($currentAccount = $currentAccount->recordAccountChild) {
-            array_push($childRecordsId, $currentAccount->id);
-        }
-
-        return array_merge($parentRecordsId, $childRecordsId);
+        return $recordsAccountId;
     }
 }
