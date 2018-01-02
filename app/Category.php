@@ -55,6 +55,14 @@ class Category extends Model
     }
 
     /**
+     * Get the category records for the category record, recursively.
+     */
+    public function recordsCategoryRecursive()
+    {
+        return $this->recordsCategory()->with('recordsCategoryRecursive');
+    }
+
+    /**
      * Get the transaction records for the category record.
      */
     public function recordsTransaction()

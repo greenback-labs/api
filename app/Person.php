@@ -55,6 +55,14 @@ class Person extends Model
     }
 
     /**
+     * Get the person records for the person record, recursively.
+     */
+    public function recordsPersonRecursive()
+    {
+        return $this->recordsPerson()->with('recordsPersonRecursive');
+    }
+
+    /**
      * Get the transaction records for the person record.
      */
     public function recordsTransaction()

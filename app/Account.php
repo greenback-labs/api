@@ -55,6 +55,14 @@ class Account extends Model
     }
 
     /**
+     * Get the account records for the account record, recursively.
+     */
+    public function recordsAccountRecursive()
+    {
+        return $this->recordsAccount()->with('recordsAccountRecursive');
+    }
+
+    /**
      * Get the transaction records for the account record.
      */
     public function recordsTransaction()
