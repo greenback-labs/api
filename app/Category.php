@@ -41,17 +41,17 @@ class Category extends Model
     /**
      * Get the category record that owns the category record.
      */
-    public function recordCategoryParent()
+    public function recordCategory()
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
 
     /**
-     * Get the category record associated with the category.
+     * Get the category records for the category record.
      */
-    public function recordCategoryChild()
+    public function recordsCategory()
     {
-        return $this->hasOne(Category::class, 'category_id');
+        return $this->hasMany(Category::class, 'category_id');
     }
 
     /**

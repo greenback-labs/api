@@ -41,17 +41,17 @@ class Account extends Model
     /**
      * Get the account record that owns the account record.
      */
-    public function recordAccountParent()
+    public function recordAccount()
     {
         return $this->belongsTo(Account::class, 'account_id');
     }
 
     /**
-     * Get the account record associated with the account.
+     * Get the account records for the account record.
      */
-    public function recordAccountChild()
+    public function recordsAccount()
     {
-        return $this->hasOne(Account::class, 'account_id');
+        return $this->hasMany(Account::class, 'account_id');
     }
 
     /**
