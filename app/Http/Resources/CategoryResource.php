@@ -14,11 +14,13 @@ class CategoryResource extends Resource
      */
     public function toArray($request)
     {
+        $recordsCategory = new CategoryCollection($this->whenLoaded('recordsCategoryRecursive'));
+
         return [
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'recordCategoryParent' => new CategoryResource($this->whenLoaded('recordCategoryParent'))
+            'recordsCategory' => $this->when($recordsCategory->isNotEmpty(), $recordsCategory)
         ];
     }
 }

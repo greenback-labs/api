@@ -14,11 +14,13 @@ class AccountResource extends Resource
      */
     public function toArray($request)
     {
+        $recordsAccount = new AccountCollection($this->whenLoaded('recordsAccountRecursive'));
+
         return [
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'recordAccountParent' => new AccountResource($this->whenLoaded('recordAccountParent'))
+            'recordsAccount' => $this->when($recordsAccount->isNotEmpty(), $recordsAccount)
         ];
     }
 }
