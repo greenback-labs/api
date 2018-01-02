@@ -15,7 +15,7 @@ class PersonController extends Controller
      */
     public function index()
     {
-        return new PersonCollection(Person::with('recordsPersonRecursive')->paginate(100));
+        return new PersonCollection(Person::whereNull('person_id')->with('recordsPersonRecursive')->paginate(100));
     }
 
     /**

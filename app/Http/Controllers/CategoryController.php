@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return new CategoryCollection(Category::with('recordsCategoryRecursive')->paginate(100));
+        return new CategoryCollection(Category::whereNull('category_id')->with('recordsCategoryRecursive')->paginate(100));
     }
 
     /**

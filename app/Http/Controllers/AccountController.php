@@ -15,7 +15,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        return new AccountCollection(Account::with('recordsAccountRecursive')->paginate(100));
+        return new AccountCollection(Account::whereNull('account_id')->with('recordsAccountRecursive')->paginate(100));
     }
 
     /**
